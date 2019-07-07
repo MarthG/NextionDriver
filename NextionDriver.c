@@ -90,7 +90,10 @@ void sendCommand(char *cmd){
         write(fd2,"\xFF\xFF\xFF",3);
         writelog(LOG_DEBUG," TX:  %s",cmd);
         if (screenLayout==4)
-            usleep(1042*(strlen(cmd)+1));
+            // 115200: 1042
+            // 38k4: 348
+            // 57k6: 522
+            usleep(348*(strlen(cmd)+1));
         else
             usleep(87*(strlen(cmd)+1));
 
@@ -168,7 +171,8 @@ void updateDisplay(void) {
     FILE *ptr;
 
     if (screenLayout==4) {
-            baudrate=115200;
+            //baudrate=115200;
+            baudrate=38400;
         } else {
             baudrate=9600;
         }
@@ -716,6 +720,7 @@ int main(int argc, char *argv[])
     fd1=ptym_open(mux,mmdvmPort,sizeof(mux));
     if (strcmp(nextionPort,"modem")!=0) {
         if (screenLayout==4) {
+            // BAUDRATE4: NextionDriver.h, 50
             fd2=open_nextion_serial_port(nextionPort,BAUDRATE4);
         } else {
             fd2=open_nextion_serial_port(nextionPort,BAUDRATE3);

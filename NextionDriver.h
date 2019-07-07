@@ -47,7 +47,7 @@
 #define MMDVM_DISPLAY 1
 
 #define BAUDRATE3	B9600
-#define BAUDRATE4	B115200
+#define BAUDRATE4	B38400
 
 char mux[100];
 char mmdvmPort[100];
